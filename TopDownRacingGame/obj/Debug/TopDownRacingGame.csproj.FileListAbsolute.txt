@@ -1,0 +1,11 @@
+C:\Users\shaya\source\repos\TopDownRacingGame\bin\Debug\TopDownRacingGame.exe.config
+C:\Users\shaya\source\repos\TopDownRacingGame\bin\Debug\TopDownRacingGame.exe
+C:\Users\shaya\source\repos\TopDownRacingGame\bin\Debug\TopDownRacingGame.pdb
+C:\Users\shaya\source\repos\TopDownRacingGame\obj\Debug\TopDownRacingGame.csproj.AssemblyReference.cache
+C:\Users\shaya\source\repos\TopDownRacingGame\obj\Debug\TopDownRacingGame.csproj.SuggestedBindingRedirects.cache
+C:\Users\shaya\source\repos\TopDownRacingGame\obj\Debug\TopDownRacingGame.Form1.resources
+C:\Users\shaya\source\repos\TopDownRacingGame\obj\Debug\TopDownRacingGame.Properties.Resources.resources
+C:\Users\shaya\source\repos\TopDownRacingGame\obj\Debug\TopDownRacingGame.csproj.GenerateResource.cache
+C:\Users\shaya\source\repos\TopDownRacingGame\obj\Debug\TopDownRacingGame.csproj.CoreCompileInputs.cache
+C:\Users\shaya\source\repos\TopDownRacingGame\obj\Debug\TopDownRacingGame.exe
+C:\Users\shaya\source\repos\TopDownRacingGame\obj\Debug\TopDownRacingGame.pdb
