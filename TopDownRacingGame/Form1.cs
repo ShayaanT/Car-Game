@@ -1,16 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Windows.Gaming.Input;
-using System.Runtime;
-using System.Diagnostics;
-using SharpDX.XInput;
 
 
 namespace TopDownRacingGame
@@ -33,12 +30,14 @@ namespace TopDownRacingGame
         public Form1()
         {
             InitializeComponent();
-            
-            resetgame();
+
+            gameover();
+            lbl_value.Text = Properties.Settings.Default.h_score;
+            reset_hscore.Hide();
             
         }
 
-        private void keyisdown(object sender, KeyEventArgs e)
+        void keyisdown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
             {
@@ -51,21 +50,55 @@ namespace TopDownRacingGame
             if (e.KeyCode == Keys.Up)
             {
                 goup = true;
-                if (roadspeed < 100)
+                
+
+                if (score > 1 && score < 500 && roadspeed < 18)
                 {
                     roadspeed++;
-                    trafficspeed = roadspeed + 2;
+                    trafficspeed = roadspeed + 3;
                 }
+
+                if (score > 500 && score < 2000 && roadspeed < 25)
+                {
+                    
+                    
+                    
+                     roadspeed++;
+                     trafficspeed = roadspeed + 3;
+                    
+                }
+                if (score > 2000 && roadspeed < 100)
+                {
+                    roadspeed++;
+                    trafficspeed = roadspeed + 3;
+                }
+                
+  
 
             }
             if (e.KeyCode == Keys.Down)
             {
                 godown = true;
-                if (roadspeed > 1)
+
+
+                if (score > 1 && score < 500 && roadspeed > 1)
                 {
-                    roadspeed --;
-                    trafficspeed = roadspeed + 2;
+                    roadspeed--;
+                    trafficspeed = roadspeed + 3;
                 }
+                
+                if (score > 500 && score < 2000 && roadspeed > 12)
+                {
+                    roadspeed--;
+                    trafficspeed = roadspeed + 3;
+                }
+                if (score > 2000 && roadspeed > 18)
+                {
+                    roadspeed--;
+                    trafficspeed = roadspeed + 3;
+                }
+                
+
             }
 
 
@@ -83,6 +116,16 @@ namespace TopDownRacingGame
                 goright = false;
                 
             }
+            if (e.KeyCode == Keys.Up)
+            {
+                goup = false;
+            }
+            if (e.KeyCode == Keys.Down)
+            {
+                godown = false;
+
+
+            }
 
 
 
@@ -92,10 +135,10 @@ namespace TopDownRacingGame
 
         private void gametimerevent(object sender, EventArgs e)
         {
-
-
+            reset_hscore.Hide();
+            
             txtscore.Text = "Score: " + score;
-            score++;
+            score = score + 1;
 
             speed.Text = "Speed: " + roadspeed;
 
@@ -136,20 +179,35 @@ namespace TopDownRacingGame
             if (player.Bounds.IntersectsWith(ai1.Bounds) || player.Bounds.IntersectsWith(ai2.Bounds))
             {
                 gameover();
+                
             }
-            if (score > 40 && score < 500)
+            if (score > 1 && score < 500)
             {
                 award.Image = Properties.Resources.bronze;
+
+
             }
             if (score > 500 && score < 2000)
             {
+                levels.Text = "Level: 2";
                 award.Image = Properties.Resources.silver;
-               
+                if (roadspeed < 12)
+                {
+                    roadspeed = 12;
+                    trafficspeed = roadspeed + 3;
+                }
+
                 
             }
             if (score > 2000)
             {
+                levels.Text = "Level: 3";
                 award.Image = Properties.Resources.gold;
+                if (roadspeed < 18)
+                {
+                    roadspeed = 18;
+                    trafficspeed = roadspeed + 3;
+                }
 
             }
 
@@ -208,6 +266,7 @@ namespace TopDownRacingGame
         {
             playsound();
             gametimer.Stop();
+            reset_hscore.Show();
             explosion.Visible = true;
             player.Controls.Add(explosion);
             explosion.Location = new Point(-8, -5);
@@ -215,17 +274,29 @@ namespace TopDownRacingGame
 
             award.Visible = true;
             award.BringToFront();
+            
+
+            int a = Int32.Parse(lbl_value.Text);
+            if (score > a)
+            {
+                int b = score - 1;
+                lbl_value.Text = b.ToString();
+                Properties.Settings.Default.h_score = lbl_value.Text;
+                Properties.Settings.Default.Save();
+            }
 
             btnstart.Enabled = true;
         }
         private void resetgame()
         {
+            reset_hscore.Hide();
             btnstart.Enabled = false;
             explosion.Visible = false;
             award.Visible = false;
             goleft = false;
             goright = false;
             score = 0;
+            levels.Text = "Level: 1";
             award.Image = Properties.Resources.bronze;
 
             roadspeed = 12;
@@ -259,6 +330,14 @@ namespace TopDownRacingGame
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void reset_click(object sender, EventArgs e)
+        {
+
+            lbl_value.Text = "0";
+            Properties.Settings.Default.h_score = lbl_value.Text;
+            Properties.Settings.Default.Save();
         }
 
         private void txtscore_Click(object sender, EventArgs e)
